@@ -37,7 +37,7 @@ newUser.save().then((user) => {
   console.log(JSON.stringify(user, undefined, 2));
 }, (e) => {
   console.log(e);
-})
+});
 
 // var newTodo = new Todo({
 //   text: 'Kill Everyone',
