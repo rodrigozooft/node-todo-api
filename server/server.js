@@ -23,6 +23,12 @@ app.post('/todos', (req, res) => {
 
 // GET /todos/particular_todo
 
-app.listen(3000, () => {
-  console.log('The server is running in 3000');
-});
+if(!module.parent){
+  app.listen(3000, () => {
+    console.log('The server is running in 3000');
+  });
+}
+
+module.exports  = {
+  app
+};
