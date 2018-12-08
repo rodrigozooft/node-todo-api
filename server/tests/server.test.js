@@ -58,7 +58,5 @@ describe('POST /todos', () => {
           done(e);
         })
       })
-
-  })
-
+  });
 });

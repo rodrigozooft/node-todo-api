@@ -23,6 +23,14 @@ app.post('/todos', (req, res) => {
 
 // GET /todos/particular_todo
 
+app.get('/todos', (req, res) => {
+  Todo.find().then((todos) => {
+    res.send({todos});
+  }, (e) => {
+    res.status(400).send(e);
+  })
+});
+
 if(!module.parent){
   app.listen(3000, () => {
     console.log('The server is running in 3000');
