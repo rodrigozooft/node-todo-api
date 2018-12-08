@@ -4,10 +4,10 @@ const request = require('supertest');
 const { app } = require('./../server');
 const { Todo } = require('./../models/todo');
 
-var todos = [
-  {text: 'My first todo'}, 
+const todos = [
+  {text: 'My first todo', completed: true}, 
   {text: 'My second todo'}, 
-  {text: 'My third todo'}
+  {text: 'My third todo', completed: true}
 ]
 
 beforeEach((done) => {
@@ -58,5 +58,17 @@ describe('POST /todos', () => {
           done(e);
         })
       })
+  });
+});
+
+describe('GET /todos', () => {
+  it('Should get all todos', (done) => {
+    request(app)
+      .get('/todos')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.todos.length).toBe(3);
+      })
+      .end(done);
   });
 });
