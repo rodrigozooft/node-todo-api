@@ -5,7 +5,7 @@ var obj = new ObjectID();
 console.log(obj);
 
 //'mongodb://localhost:27017/TodoApp'
-MongoClient.connect('mongodb://heroku_1hd66750:aibk0lvcsgv24n5c3kmfn3f7bd@ds155091.mlab.com:55091/heroku_1hd66750/TodoApp', (err, client) => {
+MongoClient.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/TodoApp', (err, client) => {
   if (err){
     return console.log('Unable to connect to the database server');
   }
