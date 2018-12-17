@@ -1,4 +1,4 @@
-require('./config/config');
+require('./config/config'); 
 
 const { ObjectID } = require('mongodb');
 const _ = require('lodash');
