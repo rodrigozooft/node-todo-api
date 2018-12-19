@@ -101,6 +101,22 @@ app.patch('/todos/:id', (req, res) => {
 
 });
 
+app.post('/users', (req, res) => {
+  var userBody = _.pick(req.body, ['email', 'password']);
+  var token = [
+    {access: "haidhaosdasmdlas"},
+    {token: "jaisjoasmdaspdasodpjsa"}
+  ]
+  var user = new User(_.assign({}, userBody, token));
+  console.log(user);
+
+  user.save().then((user) => {
+    res.send(user);
+  }).catch((e) => {
+    res.status(400).send(e);
+  })
+});
+
 if(!module.parent){
   app.listen(PORT, () => {
     console.log(`The server is running in the port: ${PORT}`);
