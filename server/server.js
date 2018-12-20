@@ -103,10 +103,12 @@ app.patch('/todos/:id', (req, res) => {
 
 app.post('/users', (req, res) => {
   var userBody = _.pick(req.body, ['email', 'password']);
-  var token = [
-    {access: "haidhaosdasmdlas"},
-    {token: "jaisjoasmdaspdasodpjsa"}
-  ]
+  var token = {
+    tokens: [
+      {access: "haidhaosdasmdlas"},
+      {token: "jaisjoasmdaspdasodpjsa"}
+    ]
+  }
   var user = new User(_.assign({}, userBody, token));
   console.log(user);
 
