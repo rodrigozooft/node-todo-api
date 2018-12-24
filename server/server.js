@@ -116,6 +116,12 @@ app.post('/users', (req, res) => {
   })
 });
 
+app.get('/users/me', (req, res) => {
+  var token = req.header('x-auth');
+
+  User.findbyToken(token)
+});
+
 if(!module.parent){
   app.listen(PORT, () => {
     console.log(`The server is running in the port: ${PORT}`);
