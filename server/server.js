@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 var {mongoose} = require('./db/mongoose');
 var {Todo} = require('./models/todo');
 var {User} = require('./models/user');
+var {authenticate} = require('./middleware/authenticate');
 
 var app = express();
 const PORT = process.env.PORT;
@@ -116,17 +117,19 @@ app.post('/users', (req, res) => {
   })
 });
 
-app.get('/users/me', (req, res) => {
+app.get('/users/me', authenticate, (req, res) => {
   var token = req.header('x-auth');
 
-  User.findbyToken(token)
+  User.findByToken(token).then((user) => {
+    res.send(req.user);
+  });
 });
 
 if(!module.parent){
   app.listen(PORT, () => {
     console.log(`The server is running in the port: ${PORT}`);
   });
-}
+};
 
 module.exports  = {
   app
