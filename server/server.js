@@ -125,6 +125,20 @@ app.get('/users/me', authenticate, (req, res) => {
   });
 });
 
+// POST /users/login {email, password}
+
+app.post('/users/login', (req, res) => {
+  var userBody = _.pick(req.body, ['email', 'password']);
+
+  User.findByCredentials(userBody.email, userBody.password).then((user) => {
+    return user.generateAuthToken().then((token) => {
+      res.header('x-auth', token).send(user);
+    })
+  }).catch((e) => {
+    res.status(400).send();
+  });
+});
+
 if(!module.parent){
   app.listen(PORT, () => {
     console.log(`The server is running in the port: ${PORT}`);
