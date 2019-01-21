@@ -217,9 +217,7 @@ describe('POST /users', () => {
           expect(user).toBeTruthy();
           expect(user.password).not.toBe(password);
           done();
-        }).catch((err) => {
-          console.log(err);
-        })
+        }).catch((err) => done(err));
       })
   });
 
@@ -274,6 +272,25 @@ describe('POST /users/login', () => {
   });
 
   it('should reject invalid login', () => {
+    request(app)
+      .post('/users/login')
+      .send({
+        email: users[1].email,
+        password: '123abc123!'
+      })
+      .expect(400)
+      .expect((res) => {
+        expect(res.headers['x-auth']).toBeFalsy;
+      })
+      .end((err, res) => {
+        if(err){
+          return done(err);
+        }
 
-  });
-})
+        User.findById(users[1]._id).then((user) => {
+          expect(user.tokens.length).toBe(0);
+          done();
+        }).catch((e) => done(e));
+      });
+    });
+});
